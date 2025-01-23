@@ -31,8 +31,13 @@ fn verbose() -> impl Parser<LevelFilter> {
         .req_flag(())
         .count()
         .map(|l| {
-            use LevelFilter::*;
-            [Off, Error, Warn, Info, Debug, Trace][l.max(5)]
+        .map(|l| match l {
+            0 => LevelFilter::Off,
+            1 => LevelFilter::Error,
+            2 => LevelFilter::Warn,
+            3 => LevelFilter::Info,
+            4 => LevelFilter::Debug,
+            _ => LevelFilter::Trace,
         })
 }
 
